@@ -105,10 +105,31 @@ const getProducts = async (req, res) => {
     }
 };
 
+//soft delete products count
+const softDeleteProducts = async (req, res) => {
+    const { id } = req.params;
+    const numberDeletedElements = await Product.softDelete({ _id: id })
+        .catch((err) => {
+            res.status(400).json({ message: err.message });
+        });
+    res.status(200).send(numberDeletedElements);
+};
+
+//soft deleted products 
+const findDeletedProduct = async (req, res) => {
+    const deletedElements = await Product.findDeleted()
+        .catch((err) => {
+            res.status(400).json({ message: err.message });
+        });
+    res.status(200).send(deletedElements);
+};
+
 module.exports = {
     createProduct,
     updateProduct,
     deleteProduct,
     getProduct,
-    getProducts
+    getProducts,
+    softDeleteProducts,
+    findDeletedProduct
 }

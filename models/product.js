@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { softDeletePlugin } = require('soft-delete-plugin-mongoose');
 
 const productSchema = new mongoose.Schema({
     title: {
@@ -13,18 +14,17 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     img: {
-        type: Object,
-        default: {},
+        type: String,
+        default: "",
     },
     sku: {
         type: String,
         required: true,
-        default: "SKU",
-        trim: true,
     },
     category: {
-        type: String,
-        required: [true, "Please Enter Product Category"],
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'category',
+        required: true
     },
     quantity: {
         type: Number,
@@ -39,10 +39,12 @@ const productSchema = new mongoose.Schema({
 }, { timestamps: true }
 );
 
+productSchema.plugin(softDeletePlugin);
+
 module.exports = mongoose.model("Product", productSchema);
 
 
-//soft delete
+//soft delete(done)
 //feature(crud operation)
 //measurement type
-//category(crud operation)
+//category(crud operation)(done)

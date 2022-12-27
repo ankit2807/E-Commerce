@@ -5,6 +5,7 @@ const connection = require('./database/db');
 const authRouter = require('./routes/auth');
 const adminRouter = require('./routes/admin');
 const productRouter = require('./routes/product');
+const categoryRouter = require('./routes/category');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
 
@@ -20,6 +21,7 @@ app.use(cookieParser())
 app.use('/api/auth', authRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/product', productRouter);
+app.use('/api/category', categoryRouter);
 
 //port
 const PORT = process.env.PORT || 4000;
