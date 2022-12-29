@@ -23,22 +23,6 @@ const Upload = multer({
         cb(undefined, true)
     }
 })
-// const upload = multer({
-//     storage: multer.diskStorage({
-//         destination: function (req, file, cb) {
-//             cb(null, 'public')
-//         }
-//     }),
-//     // fileFilter: function(req, file, cb) {
-//     //     if (!file.originalname.match(/\.(jpg|jpeg|png|jfif)$/)) {
-//     //         return cb(new Error('Please upload a Image'))
-//     //     }
-//     //     cb(undefined, true)
-//     // },
-//     filename: function (req, file, cb) {
-//         cb(null, file.originalname + "-" + Date.now() + ".jpg")
-//     },
-// });
 
 //upload the image
 router.post('/', Upload.array('image'), (req, res) => {
