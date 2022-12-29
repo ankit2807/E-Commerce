@@ -1,31 +1,8 @@
 const Product = require('../models/product');
-const { fileSizeFormatter } = require("../utils/FileUpload");
-const cloudinary = require("cloudinary").v2;
 
 //Create
 const createProduct = async (req, res) => {
     const newProduct = new Product(req.body);
-
-    let fileData = {};
-    if (req.file) {
-        let uploadedFile;
-        try {
-            uploadedFile = await cloudinary.uploader.upload(req.file.path, {
-                folder: "E-Commerce",
-                resource_type: "image",
-            });
-        } catch (error) {
-            res.status(500).json("Image could not be uploaded");
-        }
-
-        fileData = {
-            fileName: req.file.originalname,
-            filePath: uploadedFile.secure_url,
-            fileType: req.file.mimetype,
-            fileSize: fileSizeFormatter(req.file.size, 2),
-        };
-    }
-
     try {
         const savedProduct = await newProduct.save();
         return res.status(200).json(savedProduct);
@@ -36,25 +13,6 @@ const createProduct = async (req, res) => {
 
 //Update
 const updateProduct = async (req, res) => {
-    let fileData = {};
-    if (req.file) {
-        let uploadedFile;
-        try {
-            uploadedFile = await cloudinary.uploader.upload(req.file.path, {
-                folder: "E-Commerce",
-                resource_type: "image",
-            });
-        } catch (error) {
-            res.status(500).json("Image could not be uploaded");
-        }
-
-        fileData = {
-            fileName: req.file.originalname,
-            filePath: uploadedFile.secure_url,
-            fileType: req.file.mimetype,
-            fileSize: fileSizeFormatter(req.file.size, 2),
-        };
-    }
     try {
         const updatedProduct = await Product.findByIdAndUpdate(req.params.id,
             {
