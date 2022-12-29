@@ -11,7 +11,6 @@ const orderRouter = require("./routes/order");
 const uploadRouter = require("./utils/FileUpload");
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
-const path = require('path');
 
 //database connection
 connection();
@@ -21,7 +20,6 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser())
 
-app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 //routes
 app.use('/api/auth', authRouter);
