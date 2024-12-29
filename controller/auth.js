@@ -53,7 +53,21 @@ const login = async (req, res) => {
     }
 };
 
+const logout = async (req, res) => {
+    try {
+        const authHeader = req.headers['cookie'];
+        if (!authHeader) return res.sendStatus(204); // No content                                                                                                                   
+        // Clear the cookie by setting it to an expired date
+        res.cookie('token', '', { expires: new Date(0), httpOnly: true, secure: false }); // Set secure: true if using HTTPS
+        return res.json({ message: 'Logged out' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'An error occurred during logout' });
+    }
+}
+
 module.exports = {
     register,
-    login
+    login,
+    logout
 }
