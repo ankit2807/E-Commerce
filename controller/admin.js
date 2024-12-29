@@ -34,20 +34,8 @@ const getUser = async (req, res) => {
     }
 };
 
-//Logout user
-const logout = async (req, res) => {
-    try {
-        const authHeader = req.headers['cookie'];
-        if (!authHeader) return res.sendStatus(204); // No content
-        const cookie = authHeader.split('=')[1]; // If there is, split the cookie string to get the actual jwt token
-        const accessToken = cookie.split(';')[0];
-    } catch (error) {
-
-    }
-}
-
 module.exports = {
     updateUser,
     deleteUser,
-    getUser,
+    getUser
 }
